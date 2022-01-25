@@ -7,14 +7,16 @@ public class CircuitBreakerTest {
         do {
 
             try {
+                if(Circuitbreaker.ISOPEN.get())
+                    System.out.println("FALL BACk::"+fallbackMethod());
+                else
                 processMethod(true);
             } catch (Exception e) {
                 Circuitbreaker.error.set(true);
                 if(attempts.incrementAndGet() > 10)
                     endProcess=true;
 
-                if(Circuitbreaker.ISOPEN.get())
-                    System.out.println("FALL BACk::"+fallbackMethod());
+
 
                 Thread.sleep(1000);
             }
@@ -33,9 +35,9 @@ public class CircuitBreakerTest {
         return  "all good";
     }
 
-    public String fallbackMethod(){
+    public String fallbackMethod() throws  Exception{
 
-
+    Thread.sleep(1000);
         return "Fallback method msg";
     }
 

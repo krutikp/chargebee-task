@@ -46,7 +46,7 @@ public class Circuitbreaker implements Runnable {
 
             }
 
-            if(open != null && open.plusMinutes(1).isBefore(LocalDateTime.now())){
+            if(open != null && open.plusSeconds(10).isBefore(LocalDateTime.now())){
                 System.out.println("Open Timer::" + open.toString() );
                 counter.set(0);
 
